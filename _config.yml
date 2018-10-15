@@ -1,0 +1,27 @@
+title: 'Azure Cosmos DB Engineering Blog'
+
+description: 'Blogs from Azure Cosmos DB Engineering Team'
+
+remote_theme: azure-immersion/cosmos-jekyll-theme
+
+exclude:
+
+  - .build/
+
+  - .circleci/
+
+plugins:
+
+  - jekyll-sitemap
+
+  - jekyll-mentions
+
+  - jemoji
+
+markdown: kramdown
+
+kramdown:
+
+   syntax_highlighter_opts:
+
+      disable : true
