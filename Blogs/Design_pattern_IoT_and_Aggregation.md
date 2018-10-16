@@ -13,7 +13,7 @@ A collection has many physical partitions and the number of partitions are alloc
 To achieve high scale throughput and low latency, you need to specify a partition key and row key while inserting the data, and use the same partition key and row key while reading the data. If you choose the right partition key then your data will be distributed evenly across all the partitions, and the read and write operations can be in single digit milliseconds. 
 Internally, Azure Cosmos DB uses hash-based partitioning. When you write an item, Azure Cosmos DB hashes the partition key value and uses the hashed result to determine which partition to store the item in. A good partition key will distribute your data equally among all the available partitions as shown below. 
 
-(https://azurecosmosdb.github.io/blogs/media/GoodPartition.png "Fig. 1")
+(../media/GoodPartition.png "Fig. 1")
 
 Please note, there isn’t a one to one mapping between partition keys and physical partitions, which means a million partition keys will not create million physical partitions. Ten million partition keys can be stored in ten physical partitions. Often novice users think that a partition key is equal to physical partition. Please remember, one is a logical concept (Partition key) and the other is a physical concept. They are not mapped one to one. Because of hashing and modulo operators, many partition keys mapped to few partitions. Each logical partition can store 10 GB of data, when the data grows more than 10 GB, this partition is automatically split. You never have to worry about splitting partitions; Azure Cosmos DB does it behind the scene. However, you should never have a partition key, which may have more than 10 GB of data.
 
