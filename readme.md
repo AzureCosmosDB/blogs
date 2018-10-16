@@ -1,3 +1,4 @@
-# Prerequisites
+# Azure Cosmos DB Engineering Blogs
 
-Blogs from Azure Cosmos DB Engineering Team Coming soon
+[Design Pattern - IoT Data and Aggregation] (https://azurecosmosdb.github.io/blogs/Blogs/Design_pattern_IoT_and_Aggregation.html)
+
