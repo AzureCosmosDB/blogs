@@ -34,7 +34,7 @@ Imagine you have a customer which is a global company with offices in every coun
 
 If you choose, CustomerId as the partition key, you will see your data is skewed   for large customers and your partitions   will look as shown below. 
 
-(../media/BadPartition.PNG "Fig. 2")
+![Fig 2](../media/BadPartition.PNG)
 
 This kind of partitioning will also create throttling for large customers. Large customers, who have hundreds and thousands of IoT devices and they are inserting the data in a collection partitioned on CustomerId may be throttled.  You may wonder why it will be throttled? To understand that, imagine your collection is defined to have 5000 RU/Sec and you have 5  partitions  . This means, each partition can have 1000 RU. So, it means your throughput is 1000 RU per partition. 
 
@@ -55,7 +55,7 @@ Imagine, you have inserted the data with DeviceId as partition key, but if you n
 Cross-partition queries cost you much more RU then the point look up. In Cross-partition queries, you pay for latency and RU both. In cross-partition queries, every partition is searched for your data, which is much expensive operation than a point lookup in one partition.
 You have two options to solve this problem  . First option is to use change feed of Cosmos DB and using Azure Function you aggregate the data per hours and then store the aggregated data in another collection, where CustomerId is the partition key.  
 
-(../media/ChangefeedReporting.PNG "Fig. 3")
+![Fig 3](../media/ChangefeedReporting.PNG)
 
 You can again listen to the change feed of Reports/Hours collection to aggregate the data for per day and store the aggregation in another Cosmos DB (Reports/day). The above picture is very self-explanatory. IoT devices are sending data directly to Cosmos DB. This pattern is possible because of change feed. Change feed exposes the append only log of Cosmos DB. The change feed includes inserts and update operations made to documents within the collection. You can read more about change feed here. However, please know that change feed is enabled by default for all account and for all collections.
 
@@ -63,7 +63,7 @@ To learn more about how to use change feed and azure function, check this [scree
 
 Second option is to use Spark, to do the aggregation, and keep the aggregated value in SQL data warehouse or a second collection where partition key is CustomerId. 
 
-(../media/ChangefeedSpark.PNG "Fig. 4")
+![Fig 4](../media/ChangefeedSpark.PNG)
 
 This option will also use the change feed. From Spark, you can connect directly to change feed and get all the changes in spark at the real time. Once the data is in spark, you can do the aggregation and then write that data back to Cosmos DB or to SQL DW. 
 
