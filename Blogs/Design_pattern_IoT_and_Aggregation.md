@@ -13,7 +13,7 @@ A collection has many physical partitions and the number of partitions are alloc
 To achieve high scale throughput and low latency, you need to specify a partition key and row key while inserting the data, and use the same partition key and row key while reading the data. If you choose the right partition key then your data will be distributed evenly across all the partitions, and the read and write operations can be in single digit milliseconds. 
 Internally, Azure Cosmos DB uses hash-based partitioning. When you write an item, Azure Cosmos DB hashes the partition key value and uses the hashed result to determine which partition to store the item in. A good partition key will distribute your data equally among all the available partitions as shown below. 
 
-(https://github.com/AzureCosmosDB/blogs/blob/master/media/GoodPartition.png "Fig. 1")
+(https://azurecosmosdb.github.io/blogs/media/GoodPartition.png "Fig. 1")
 
 Please note, there isn’t a one to one mapping between partition keys and physical partitions, which means a million partition keys will not create million physical partitions. Ten million partition keys can be stored in ten physical partitions. Often novice users think that a partition key is equal to physical partition. Please remember, one is a logical concept (Partition key) and the other is a physical concept. They are not mapped one to one. Because of hashing and modulo operators, many partition keys mapped to few partitions. Each logical partition can store 10 GB of data, when the data grows more than 10 GB, this partition is automatically split. You never have to worry about splitting partitions; Azure Cosmos DB does it behind the scene. However, you should never have a partition key, which may have more than 10 GB of data.
 
@@ -34,7 +34,7 @@ Imagine you have a customer which is a global company with offices in every coun
 
 If you choose, CustomerId as the partition key, you will see your data is skewed   for large customers and your partitions   will look as shown below. 
 
-(https://github.com/AzureCosmosDB/blogs/blob/master/media/BadPartition.png "Fig. 2")
+(https://azurecosmosdb.github.io/blogs/media/BadPartition.png "Fig. 2")
 
 This kind of partitioning will also create throttling for large customers. Large customers, who have hundreds and thousands of IoT devices and they are inserting the data in a collection partitioned on CustomerId may be throttled.  You may wonder why it will be throttled? To understand that, imagine your collection is defined to have 5000 RU/Sec and you have 5  partitions  . This means, each partition can have 1000 RU. So, it means your throughput is 1000 RU per partition. 
 
@@ -55,7 +55,7 @@ Imagine, you have inserted the data with DeviceId as partition key, but if you n
 Cross-partition queries cost you much more RU then the point look up. In Cross-partition queries, you pay for latency and RU both. In cross-partition queries, every partition is searched for your data, which is much expensive operation than a point lookup in one partition.
 You have two options to solve this problem  . First option is to use change feed of Cosmos DB and using Azure Function you aggregate the data per hours and then store the aggregated data in another collection, where CustomerId is the partition key.  
 
-(https://github.com/AzureCosmosDB/blogs/blob/master/media/ChangefeedReporting.png "Fig. 3")
+(https://azurecosmosdb.github.io/blogs/media/ChangefeedReporting.png "Fig. 3")
 
 You can again listen to the change feed of Reports/Hours collection to aggregate the data for per day and store the aggregation in another Cosmos DB (Reports/day). The above picture is very self-explanatory. IoT devices are sending data directly to Cosmos DB. This pattern is possible because of change feed. Change feed exposes the append only log of Cosmos DB. The change feed includes inserts and update operations made to documents within the collection. You can read more about change feed here. However, please know that change feed is enabled by default for all account and for all collections.
 
@@ -63,7 +63,7 @@ To learn more about how to use change feed and azure function, check this [scree
 
 Second option is to use Spark, to do the aggregation, and keep the aggregated value in SQL data warehouse or a second collection where partition key is CustomerId. 
 
-(https://github.com/AzureCosmosDB/blogs/blob/master/media/ChangefeedSpark.png "Fig. 4")
+(https://azurecosmosdb.github.io/blogs/media/ChangefeedSpark.png "Fig. 4")
 
 This option will also use the change feed. From Spark, you can connect directly to change feed and get all the changes in spark at the real time. Once the data is in spark, you can do the aggregation and then write that data back to Cosmos DB or to SQL DW. 
 
