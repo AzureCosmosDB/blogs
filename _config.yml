@@ -24,3 +24,5 @@ kramdown:
 
       disable : true
 
+
+theme: jekyll-theme-midnight
