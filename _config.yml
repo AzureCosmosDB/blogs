@@ -10,12 +10,6 @@ exclude:
 
 plugins:
 
-  - jekyll-sitemap
-
-  - jekyll-mentions
-
-  - jemoji
-
 markdown: kramdown
 
 kramdown:
