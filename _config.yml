@@ -2,8 +2,6 @@ title: 'Azure Cosmos DB Engineering Blog'
 
 description: 'Blogs from Azure Cosmos DB Engineering Team'
 
-remote_theme: azure-immersion/cosmos-jekyll-theme
-
 exclude:
 
   - .build/
